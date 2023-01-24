@@ -31,31 +31,81 @@ def conditionalProbability(elm, val, conElm, conVal, conCount) :
     prob = count / conCount
     return prob
 
+# set of all possible value belongs to data set
+outLookSet = []
+temperatureSet = []
+humiditySet = []
+windSet=[]
+for curr in dataSet :
+    if(outLookSet.count(curr["outLook"]) == 0) :
+        outLookSet.append(curr['outLook'])
+    if(temperatureSet.count(curr["temperature"]) == 0) :
+        temperatureSet.append(curr['temperature'])
+    if(humiditySet.count(curr["humidity"]) == 0) :
+        humiditySet.append(curr['humidity'])
+    if(windSet.count(curr["wind"]) == 0) :
+        windSet.append(curr['wind'])
+
+
+# taking op from user and validating
 print('\n\nPlease enter following conditions to find result.\n')
+
+outLook = input('\nOutLook : ')
+while(1) :
+    if(outLookSet.count(outLook) == 0) :
+        print("\nInvalid value for outLook, please enter one from data set : ")
+        print(outLookSet)
+        outLook = input('\nOutLook : ')
+    else :
+        break
+
+temperature = input('\nTemperature : ')
+while(1) :
+    if(temperatureSet.count(temperature) == 0) :
+        print("\nInvalid value for temperature, please enter one from data set : ")
+        print(temperatureSet)
+        temperature = input('\nTemperature : ')
+    else :
+        break
+
+humidity = input('\nHumidity : ')
+while(1) :
+    if(humiditySet.count(humidity) == 0) :
+        print("\nInvalid value for humidity, please enter one from data set : ")
+        print(humiditySet)
+        humidity = input('\nHumidity : ')
+    else :
+        break
+
+wind = input('\nWind : ')
+while(1) :
+    if(windSet.count(wind) == 0) :
+        print("\nInvalid value for wind, please enter one from data set : ")
+        print(windSet)
+        wind = input('\nWind : ')
+    else :
+        break
+
 # table for outLook
-outLook = input('\n OutLook : ')
 outLookY = conditionalProbability('outLook', outLook, 'play', 'yes', posCount)
 outLookN = conditionalProbability('outLook', outLook, 'play', 'no', negCount)
 
 # table for temperature
-temperature = input('\n Temperature : ')
 temperatureY = conditionalProbability('temperature', temperature, 'play', 'yes', posCount)
 temperatureN = conditionalProbability('temperature', temperature, 'play', 'no', negCount)
 
 # table for humidity
-humidity = input('\n Humidity : ')
 humidityY = conditionalProbability('humidity', humidity, 'play', 'yes', posCount)
 humidityN = conditionalProbability('humidity', humidity, 'play', 'no', negCount)
 
 # table for wind
-wind = input('\n Wind : ')
 windY = conditionalProbability('wind', wind, 'play', 'yes', posCount)
 windN = conditionalProbability('wind', wind, 'play', 'no', negCount)
 
 vnbN = PofNegCount * outLookN * temperatureN * humidityN * windN
-vnbY = PofPosCount * outLookY * temperatureY * humidityY * windY
+vnbP = PofPosCount * outLookY * temperatureY * humidityY * windY
 
-if(vnbY > vnbN) :
+if(vnbP > vnbN) :
     print('\n Under this condition it is playable !!\n')
 else :
     print('\n Under this condition it is Not Playable !!\n')
